@@ -7,7 +7,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from .models import Post 
 
-# Create your views here.
+from django.core.mail import send_mail,send_mass_mail
 
 @login_required(login_url='/login')
 def home(request):
@@ -51,8 +51,11 @@ def create_post(request):
             post = form.save(commit=False)
             post.author = request.user
             post.save()
-            return HttpResponseRedirect(reverse('home'))
+        return HttpResponseRedirect(reverse('home'))
             
     return render(request,'main/create_post.html',{
         'form': CreatePost()
     })
+
+
+
